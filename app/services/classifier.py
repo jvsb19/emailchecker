@@ -1,8 +1,6 @@
-from dotenv import load_dotenv
 from transformers import pipeline
 import torch
 
-load_dotenv()
 classifier = pipeline(
     "zero-shot-classification",
     model="facebook/bart-large-mnli",
