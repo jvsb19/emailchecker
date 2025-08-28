@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 from transformers import pipeline 
 import torch
 
@@ -37,10 +38,11 @@ def email_response(category):
     return "Indefinido"
 =======
 from dotenv import load_dotenv
+=======
+>>>>>>> 7a262bb (atualizacao classifier e gitignore)
 from transformers import pipeline
 import torch
 
-load_dotenv()
 classifier = pipeline(
     "zero-shot-classification",
     model="facebook/bart-large-mnli",
