@@ -1,20 +1,22 @@
-from nlp_utils import preprocess_text
+from flask import request, jsonify
+from services.classifier import email_classify
 
-def email_classify(text: str) -> str:
-    tokens = preprocess_text(text)
-    print(tokens)
-    produtivo_keywords = ["acesso", "ajuda", "atualização", "chamado", "contrato", "erro", "problema", "suporte"]
-    improdutivo_keywords = ["abraço", "feliz", "obrigado", "parabéns"]
+def routes(app):
+    @app.route("/classify", methods=["POST"])
+    def classify():
+        data = request.get_json()
 
-    if any(word in tokens for word in produtivo_keywords):
-        return "Produtivo"
-    elif any(word in tokens for word in improdutivo_keywords):
-        return "Improdutivo"
-    return "Indefinido"
+        if not data or "email" not in data:
+            return jsonify({"error": "Campo 'email obrigatorio"}), 400
+        
+        email_text = data["email"]
+        
+        category= email_classify(email_text)
 
-def email_response(category: str) -> str:
-    if category == "Produtivo":
-        return "Email categorizado como Produtivo"
-    return "Email categorizado como Improdutivo"
+        result = {
+            "original_email": email_text,
+            "category": category
+        }
 
-    
+        return jsonify(result)
+        
