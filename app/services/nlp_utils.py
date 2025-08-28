@@ -1,4 +1,5 @@
 import re
+<<<<<<< HEAD
 
 _PT_STOP = {
     "a","o","e","é","de","do","da","dos","das","um","uma","uns","umas",
@@ -15,3 +16,20 @@ def preprocess_text(text: str):
     text = re.sub(r"[^a-z0-9á-úà-ùâ-ûã-õç\s]", " ", text)
     tokens = [t for t in text.split() if t not in _PT_STOP and len(t) > 2]
     return tokens
+=======
+import spacy
+
+nlp = spacy.load("pt_core_news_sm")
+
+def preprocess_text(text):
+    text = text.lower()
+    text = re.sub(r"[^a-zA-Zá-úÁ-Ú\s]", "", text)
+    doc = nlp(text)
+    
+    tokens = [
+    token.lemma_ for token in doc 
+        if not token.is_stop and not token.is_punct and len(token.lemma_) > 2
+    ]
+
+    return tokens
+>>>>>>> 63b72b2 (classifier funcional)
