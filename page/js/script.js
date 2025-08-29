@@ -24,11 +24,9 @@ form.addEventListener("submit", async (e) => {
 
   try {
     let response;
-
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-
       response = await fetch("/classify-file", {
         method: "POST",
         body: formData
@@ -42,7 +40,6 @@ form.addEventListener("submit", async (e) => {
     }
 
     const data = await response.json();
-
     if (!response.ok || data.error) {
       resultContainer.className = "result improdutivo";
       resultDiv.innerHTML = `<b>Erro:</b> ${data.error || "Falha na classificação."}`;
@@ -77,3 +74,4 @@ fileInput.addEventListener("change", () => {
     fileName.textContent = "Nenhum arquivo selecionado";
   }
 });
+
