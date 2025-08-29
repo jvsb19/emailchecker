@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Email Classifier</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>Classificador de E-mails</h1>
+  <form id="emailForm" enctype="multipart/form-data">
+    <label for="emailInput"><b>Texto do e-mail:</b></label>
+    <textarea id="emailInput" placeholder="Cole o conteúdo do e-mail aqui"></textarea>
+
+    <p style="text-align:center;"><b>OU</b></p>
+
+    <label for="fileInput"><b>Enviar arquivo (.pdf, .eml, .txt):</b></label>
+    <input type="file" id="fileInput" accept=".pdf,.eml,.txt" />
+
+    <button type="submit">Classificar</button>
+  </form>
+  
+  <div id="result" class="result" style="display:none;"></div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
