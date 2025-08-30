@@ -51,5 +51,3 @@ def process_email_text(email_text: str) -> dict:
     }
 
 
-<<<<<<< HEAD
-

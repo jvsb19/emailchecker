@@ -55,11 +55,13 @@ def email_classify(text):
     
     resultado = classifier(
         text_lower,
-        candidate_labels=["urgente", "não urgente"],
+        candidate_labels=["social", "opiniativo", "festivo", #Improdutivos
+                        "urgente", "manutenção", "problema"],#Produtivos
         hypothesis_template="This email is {}."
         )
+    print(resultado)
 
-    if resultado["labels"][0] == "urgente":
+    if resultado["labels"][0] == "urgente" or resultado["labels"][0] == "manutenção" or resultado["labels"][0] == "problema" or resultado["labels"][0] == "reunião":
         return "Produtivo"
     return "Improdutivo"
             

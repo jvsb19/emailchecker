@@ -80,6 +80,7 @@ input[type="file"] {
 .btn-form:hover {
   background: #0056b3;
 }
+<<<<<<< HEAD
 .btn-file {
   width: 25%;
   display: block;
@@ -170,3 +171,4 @@ input[type="file"] {
   0% { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
