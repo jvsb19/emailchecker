@@ -9,4 +9,3 @@ app_file: app.py
 pinned: false
 ---
 
-Aplicação Gradio para classificar e-mails (texto direto ou upload de PDF/TXT/EML) usando zero-shot classification.
