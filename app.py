@@ -1,29 +1,78 @@
-import gradio as gr
-from app.func import classify_text, classify_file
+import os
+from flask import Flask, request, jsonify, send_from_directory
+from app.func import (
+    allowed_file,
+    extract_text_from_pdf,
+    extract_text_from_txt,
+    extract_text_from_eml,
+    process_email_text,
+)
 
-def interface_text(email_text):
-    result = classify_text(email_text)
-    return result
+app = Flask(__name__)
 
-def interface_file(file_obj):
-    if file_obj is None:
-        return {"error": "Nenhum arquivo enviado"}
-    return classify_file(file_obj.name)
+PAGE_DIR = os.path.join(os.path.dirname(__file__), "page")
+PAGE_DIR = os.path.abspath(PAGE_DIR)
 
-with gr.Blocks() as demo:
-    gr.Markdown("## Classificador de E-mails")
+@app.route("/classify", methods=["POST"])
+def classify():
+    email_text = None
 
-    with gr.Tab("Classificar Texto"):
-        email_input = gr.Textbox(lines=10, label="Digite o e-mail")
-        output_text = gr.JSON(label="Resultado")
-        btn_text = gr.Button("Classificar")
-        btn_text.click(fn=interface_text, inputs=email_input, outputs=output_text)
+    if request.is_json:
+        data = request.get_json()
+        if data and "email" in data:
+            email_text = data["email"]
+    elif "email_text" in request.form:
+        email_text = request.form["email_text"]
 
-    with gr.Tab("Classificar Arquivo"):
-        file_input = gr.File(label="Envie um arquivo", file_types=[".pdf", ".txt", ".eml"])
-        output_file = gr.JSON(label="Resultado")
-        btn_file = gr.Button("Classificar")
-        btn_file.click(fn=interface_file, inputs=file_input, outputs=output_file)
+    if not email_text:
+        return jsonify({"error": "Campo 'email' obrigatório"}), 400
+
+    result = process_email_text(email_text)
+    return jsonify(result)
+
+
+@app.route("/classify-file", methods=["POST"])
+def classify_file():
+    if "file" not in request.files:
+        return jsonify({"error": "Nenhum arquivo enviado"}), 400
+
+    file = request.files["file"]
+    if file.filename == "" or not allowed_file(file.filename):
+        return jsonify({"error": "Tipo de arquivo não suportado"}), 400
+
+    ext = file.filename.rsplit(".", 1)[1].lower()
+    email_text = ""
+
+    try:
+        if ext == "pdf":
+            email_text = extract_text_from_pdf(file)
+        elif ext == "txt":
+            email_text = extract_text_from_txt(file)
+        elif ext == "eml":
+            email_text = extract_text_from_eml(file)
+        else:
+            return jsonify({"error": "Extensão não suportada"}), 400
+    except Exception as e:
+        return jsonify({"error": f"Erro ao processar arquivo: {str(e)}"}), 500
+
+    if not email_text:
+        return jsonify({"error": "Não foi possível extrair conteúdo"}), 400
+
+    result = process_email_text(email_text)
+    return jsonify(result)
+
+
+@app.route("/")
+def index():
+    return send_from_directory(PAGE_DIR, "index.html")
+
+
+@app.route("/<path:path>")
+def static_files(path):
+    if path.startswith("classify"):
+        return jsonify({"error": "Rota inválida"}), 404
+    return send_from_directory(PAGE_DIR, path)
+
 
 if __name__ == "__main__":
-    demo.launch()
+    app.run(host="0.0.0.0", port=7860)
