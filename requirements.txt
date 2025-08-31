@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 --extra-index-url https://download.pytorch.org/whl/cpu
 torch==2.3.1
 transformers==4.42.0
 gradio==4.44.1
 PyPDF2==3.0.1
 flask
+=======
+Flask==3.0.3
+gunicorn==22.0.0
+torch==2.3.0
+transformers==4.42.0
+PyPDF2==3.0.1
+>>>>>>> 4d47a84 (deploy heroku)

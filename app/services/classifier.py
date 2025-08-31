@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 from transformers import pipeline 
 import torch
 
@@ -41,28 +42,46 @@ from dotenv import load_dotenv
 =======
 >>>>>>> 7a262bb (atualizacao classifier e gitignore)
 from transformers import pipeline
+=======
+from transformers import pipeline 
+>>>>>>> 4d47a84 (deploy heroku)
 import torch
 
-classifier = pipeline(
-    "zero-shot-classification",
-    model="facebook/bart-large-mnli",
-    device=0 if torch.cuda.is_available() else -1
-)
+classifier = pipeline( 
+    "zero-shot-classification", 
+    model="facebook/bart-large-mnli", 
+    device=0 if torch.cuda.is_available() else -1 
+) 
 
-def email_classify(text):
-    
-    text_lower = text.lower()
-    
-    resultado = classifier(
-        text_lower,
-        candidate_labels=["social", "opiniativo", "festivo", #Improdutivos
-                        "urgente", "manutenção", "problema"],#Produtivos
-        hypothesis_template="This email is {}."
-        )
-    print(resultado)
+produtivo_labels = {
+    "work", "help", "urgency", "refund", "technical support", "system acess", "system problem", "work budget", "error"
+}
 
-    if resultado["labels"][0] == "urgente" or resultado["labels"][0] == "manutenção" or resultado["labels"][0] == "problema" or resultado["labels"][0] == "reunião":
+improdutivo_labels = {
+    "non-work","congratulations", "joke", "automatic", "invitation", "personal", "greet", "vacation", "break", "checklist", "spam", "thank", "opinion"
+}
+
+def email_classify(text): 
+    text_lower = text.lower() 
+
+    resultado = classifier( 
+        text_lower, 
+        candidate_labels=list(produtivo_labels | improdutivo_labels), 
+        hypothesis_template="This email is about {}."
+    )
+
+    if resultado["labels"][0] in produtivo_labels:
         return "Produtivo"
     return "Improdutivo"
+<<<<<<< HEAD
             
 >>>>>>> 63b72b2 (classifier funcional)
+=======
+
+def email_response(category): 
+    if category == "Produtivo": 
+        return "Esse e-mail requer uma ação ou resposta imediata." 
+    elif category == "Improdutivo": 
+        return "Esse e-mail não requer uma ação ou resposta imediata." 
+    return "Indefinido"
+>>>>>>> 4d47a84 (deploy heroku)
