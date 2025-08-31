@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from func import routes
+from .func import routes
 
 app = Flask(__name__)
 routes(app)
