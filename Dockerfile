@@ -21,3 +21,4 @@ ENV PORT=7860
 
 # Comando de inicialização
 CMD ["python", "app.py"]
+ENV TRANSFORMERS_CACHE=/app/cache
