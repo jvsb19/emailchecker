@@ -40,6 +40,7 @@ form.addEventListener("submit", async (e) => {
     }
 
     const data = await response.json();
+
     if (!response.ok || data.error) {
       resultContainer.className = "result improdutivo";
       resultDiv.innerHTML = `<b>Erro:</b> ${data.error || "Falha na classificação."}`;
