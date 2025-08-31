@@ -6,7 +6,6 @@ from app.services.nlp_utils import preprocess_text
 ALLOWED_EXTENSIONS = {"pdf", "eml", "msg", "txt"}
 
 def allowed_file(filename: str) -> bool:
-    
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
@@ -49,6 +48,3 @@ def process_email_text(email_text: str) -> dict:
         "category": category,
         "response": response,
     }
-
-
-
