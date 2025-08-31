@@ -55,7 +55,8 @@ def classify_text(email_text):
 
 
 def classify_file(path):
-    if not allowed_file(path):
+    filename = os.path.basename(path)  # pega só o nome do arquivo
+    if not allowed_file(filename):
         return {"error": "Tipo de arquivo não suportado"}
 
     ext = path.rsplit(".", 1)[1].lower()

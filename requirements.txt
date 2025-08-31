@@ -1,9 +1,5 @@
 --extra-index-url https://download.pytorch.org/whl/cpu
-pt_core_news_sm @ https://github.com/explosion/spacy-models/releases/download/pt_core_news_sm-3.7.0/pt_core_news_sm-3.7.0.tar.gz
-spacy==3.7.2
+torch==2.3.1
 transformers==4.42.0
-torch==2.5.1
-gradio==4.41.0
+gradio==4.44.1
 PyPDF2==3.0.1
-Flask==3.0.3
-gunicorn==22.0.0
