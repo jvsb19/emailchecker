@@ -4,7 +4,6 @@ from app.func import (
     allowed_file,
     extract_text_from_pdf,
     extract_text_from_txt,
-    extract_text_from_eml,
     process_email_text,
 )
 
@@ -48,8 +47,6 @@ def classify_file():
             email_text = extract_text_from_pdf(file)
         elif ext == "txt":
             email_text = extract_text_from_txt(file)
-        elif ext == "eml":
-            email_text = extract_text_from_eml(file)
         else:
             return jsonify({"error": "Extensão não suportada"}), 400
     except Exception as e:
