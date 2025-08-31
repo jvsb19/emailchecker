@@ -3,3 +3,4 @@ torch==2.3.1
 transformers==4.42.0
 gradio==4.44.1
 PyPDF2==3.0.1
+flask
