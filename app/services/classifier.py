@@ -6,7 +6,7 @@ import torch
 
 classifier = pipeline( 
     "zero-shot-classification", 
-    model="facebook/bart-large-mnli", 
+    model="valhalla/distilbart-mnli-12-1", 
     device=0 if torch.cuda.is_available() else -1 
 ) 
 
