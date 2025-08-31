@@ -4,3 +4,7 @@ __pycache__/
 *.pyd
 .env
 app/uploads/
+.gitattributes
+Dockerfile
+Procfile
+runtime.txt

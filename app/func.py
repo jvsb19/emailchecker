@@ -5,6 +5,7 @@ from app.services.nlp_utils import preprocess_text
 
 ALLOWED_EXTENSIONS = {"pdf", "eml", "msg", "txt"}
 
+
 def allowed_file(filename: str) -> bool:
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -17,11 +18,9 @@ def extract_text_from_pdf(file) -> str:
         text += page.extract_text() or ""
     return text.strip()
 
-
 def extract_text_from_txt(file) -> str:
     """Extrai texto de TXT"""
     return file.read().decode("utf-8", errors="ignore").strip()
-
 
 def extract_text_from_eml(file) -> str:
     """Extrai texto de EML"""
