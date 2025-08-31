@@ -16,9 +16,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar código do app
 COPY . .
 
-# Definir variável de ambiente
+# Definir variáveis de ambiente
 ENV PORT=7860
+ENV TRANSFORMERS_CACHE=/data/cache
+# ou, se quiser seguir o padrão novo:
+# ENV HF_HOME=/data
 
 # Comando de inicialização
 CMD ["python", "app.py"]
-ENV TRANSFORMERS_CACHE=/app/cache
